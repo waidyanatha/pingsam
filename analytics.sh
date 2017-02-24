@@ -2,6 +2,8 @@
 # ANALYZE LOG FILES FOR PATTERNS
 # -------------------------------------------------------------------
 #
+#   nuwan at sahanafoundation dot org
+#
 #   NOTE:   to execute preiodically add a cron job by using <crontab -e>
 #   example - bash /home/nuwan/workspace/pingsam/pingsam.sh
 #

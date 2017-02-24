@@ -2,6 +2,8 @@
 # ARCHIVE LOG FILES
 # -------------------------------------------------------------------
 #
+#   nuwan at sahanafoundation dot org
+#
 #   NOTE:   to execute preiodically add a cron job by using <crontab -e>
 #   example - bash /home/nuwan/workspace/pingsam/pingsam.sh
 #
@@ -12,8 +14,8 @@
 # and emailed to administrator
 #
 ############# STATIC VARS #################
-ADM_EMAIL="nuwan$sahanafoundation.org"
-FROM_EMAIL="nuwan$sahanafoundation.org"
+ADM_EMAIL="men@example.com"
+FROM_EMAIL="me@example.com"
 LOG_DNAME="oldlogs"
 LOG_FNAME="./pingsam.log"   # to log the outcomes of each process and function
 MAX_FILES=7
