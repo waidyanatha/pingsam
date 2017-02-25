@@ -4,10 +4,7 @@ from dateutil import rrule
 import pandas as pd
 import csv
 import matplotlib.pylab as plt
-<<<<<<< HEAD
 import sys, os
-=======
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
 #lets first create the csv file
 #
 #change this to actual csv file name
@@ -29,11 +26,7 @@ def synth_data(synthdf, interval):
     if not synthdf.empty:
         #pick the originating TS data point
         synthdf.sort_values(by='pingdatetime')
-<<<<<<< HEAD
         #check if first timestamp starts at 00:00:00; if not add a dumy record
-=======
-        #startdt = synthdf.index.min()
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
         startseqnum = synthdf.index[0]
         startpingdt = synthdf.iloc[0]['pingdatetime']
         startdomain = synthdf.iloc[0]['domain']
@@ -51,19 +44,11 @@ def synth_data(synthdf, interval):
                 tmpdf.loc[len(tmpdf.index)] = [startseqnum,pingdt_plus_interval,startdomain,startstate]
             startseqnum = i
             startpingdt = row['pingdatetime']
-<<<<<<< HEAD
-=======
-#d            startdomain = row['domain']
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
             startstate = row['statenow']
             
         #after completing through all the TS datapoints check if a none empty dataframe was created
         if not tmpdf.empty:
-<<<<<<< HEAD
             tmpdf = pd.concat([tmpdf,synthdf])
-=======
-            #tmpdf.sort_values(by='pingdatetime')
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
             tmpdf = tmpdf.set_index('seqnum')
     #whether null or not return a dataframe with syntheseized TS data
     tmpdf.dropna(thresh=2)
@@ -76,10 +61,6 @@ def plot_hist_to_fig(histdf, dname):
     begdt = histdf['pingdatetime'].min().date()
     findt = histdf['pingdatetime'].max().date()
     #create a new x-axis index using dataframe index; starting from 1 instead of 0
-<<<<<<< HEAD
-=======
-#d    histdf['xvalues'] = range(1,len(histdf)+1)
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
     histdf['pingdate'] = histdf['pingdatetime'].apply(lambda x: x.date())
     downdf = pd.DataFrame(columns=['xlabel','pingdate', 'downcount'])
     datelist = list(histdf.pingdate.unique())
@@ -95,34 +76,18 @@ def plot_hist_to_fig(histdf, dname):
     #y-axis values (1 or 0) are in the dateframe statenow column
     y = np.array(downdf[:,2])
 
-<<<<<<< HEAD
     histfig, ax = plt.subplots()
     ax.bar(x,y,color='red',width=0.5, align="center")
     #to give enough spacing for the suptitle; otherwise overlaps with title
     histfig.subplots_adjust(top=0.87)
 #    plt.figure(figsize=(8,6), dpi=150)
-=======
-#    histfig = plt.figure(num=None, figsize=(8, 6), dpi=150, facecolor='w', edgecolor='k')
-#    plt.hist(downdf[:,1], cumulative=False)
-#    ax = histfig.add_subplot(211)
-    histfig, ax = plt.subplots()
-#    ax.bar(ind + width, women_means, width, color='y', yerr=women_std)
-#    ax.plot(x,y,color='green',lw=2)
-    ax.bar(x,y,color='red',width=0.5, align="center")
-    #to give enough spacing for the suptitle; otherwise overlaps with title
-    histfig.subplots_adjust(top=0.87)
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
     #beautify the plot and name the labels, titles
     ax.set_title('Percentage of time Server Failed each Day', fontsize=14, fontweight='bold', color='gray')
     histfig.suptitle(dname+'\n'+str(begdt)+' --- '+str(findt), fontsize=10, color='blue')
     ax.set_xlabel('Month-Day', fontsize=12, color='gray')
     ax.set_ylabel('Faile Rate (%)', fontsize=12, color='gray')
     plt.yticks(fontsize=10, color='gray', rotation='horizontal')
-<<<<<<< HEAD
     plt.xticks(x, xl, fontsize=10, color='gray', rotation='vertical')
-=======
-    plt.xticks(x, xl, fontsize=10, color='gray', rotation='horizontal')
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
     ax.grid(True)
 
     return histfig
@@ -144,14 +109,9 @@ def plot_freq_to_fig(plotdf, dname):
     y = np.array(plotdf[:,2].astype(int))
     
     #setup to catputure the plot into a figure
-<<<<<<< HEAD
     plotfig = plt.figure(num=None, figsize=(8, 6), dpi=150, facecolor='y', edgecolor='k')
     ax = plotfig.add_subplot(311)
     ax.fill_between(x, 0, y, color='green')
-=======
-    plotfig = plt.figure(num=None, figsize=(8, 6), dpi=150, facecolor='w', edgecolor='k')
-    ax = plotfig.add_subplot(311)
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
     ax.plot(x,y,color='green',lw=2)
     #to give enough spacing for the suptitle; otherwise overlaps with title
     plotfig.subplots_adjust(top=0.87)
@@ -162,33 +122,24 @@ def plot_freq_to_fig(plotdf, dname):
     ax.set_ylabel('Machine State', fontsize=12, color='gray')
     plt.yticks(y, ['UP','DOWN'], fontsize=10, color='gray', rotation='vertical')
     plt.xticks(fontsize=10, color='gray', rotation='horizontal')
-<<<<<<< HEAD
     plt.ylim(0,1.1)
     plt.xlim(0,x.max()+10)
-=======
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
     ax.grid(True)
 
     return plotfig
 #
 ############# MAIN ################################
 #
-<<<<<<< HEAD
 print("Complile data from file the log files")
 #os.system('./analytics.sh')
-=======
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
 print("Reading data from file "+pingfile)
 with open(pingfile, 'rb') as f:
     data = [i.split(",") for i in f.read().split()]
     df = pd.DataFrame(data, columns=['seqnum', 'pingdatetime', 'domain', 'statenow'])
     for index, row in df.iterrows():
         row[col_pingtime] = dtm.datetime.strptime(row[col_pingtime], '%Y-%m-%d:%H:%M:%S')
-<<<<<<< HEAD
         #to avoid duplicate data and to reflect ping time to be on the minute
         row[col_pingtime] = row[col_pingtime].replace(second = 0)
-=======
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
     #format pingdatetime as proper datetime, set it as the indext and then order them
     df['pingdatetime'] = pd.to_datetime(df['pingdatetime'])
     df.sort_values(by='pingdatetime')
@@ -204,7 +155,6 @@ with open(pingfile, 'rb') as f:
         if not amenddf.empty:
             #output the syntheseized dataframe to output file
             print(str(len(amenddf.index))+" data rows of syntheseised added to "+thedomain )
-<<<<<<< HEAD
             amenddf['pingdatetime'] = pd.to_datetime(amenddf.pingdatetime)
             amenddf = amenddf.sort(['pingdatetime'])
             amenddf.index = range(0,len(amenddf))
@@ -215,30 +165,11 @@ with open(pingfile, 'rb') as f:
             fig.savefig('./plots/freqplot_'+thedomain+'.png', bbox_inches='tight')
             print ('frequency plot created in file: ./plots/freqplot_'+thedomain+'.png')
             fig = plot_hist_to_fig(amenddf, thedomain)
-=======
-            finaldf = pd.concat([dompingdf,amenddf])
-            finaldf['pingdatetime'] = pd.to_datetime(finaldf.pingdatetime)
-            finaldf = finaldf.sort(['pingdatetime'])
-            finaldf.index = range(0,len(finaldf))
-            print('writing data to file: ./data/syndata_'+thedomain+'.csv')
-            finaldf.to_csv('./data/syndata_'+thedomain+'.csv')
-            #plot timeseries with function (need to add if conditions to check if function returns valid fig)
-            fig = plot_freq_to_fig(finaldf, thedomain)
-            fig.savefig('./plots/freqplot_'+thedomain+'.png', bbox_inches='tight')
-            print ('frequency plot created in file: ./plots/freqplot_'+thedomain+'.png')
-            fig = plot_hist_to_fig(finaldf, thedomain)
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
             fig.savefig('./plots/histplot_'+thedomain+'.png', bbox_inches='tight')
             print ('histogram plot created in file: ./plots/histplot_'+thedomain+'.png')
             print ('process complete for '+thedomain)
             print ('-----------------------------------------------------')
-<<<<<<< HEAD
         else:
             print ("Warning: no syntheseized data was added to: "+thedomain)
             print ('-----------------------------------------------------')
     print ('End processing data for visualization !!! ')
-=======
-
-        else:
-            print ("Warning: no syntheseized data was added to: "+thedomain)
->>>>>>> d68dcaeb528ddcca6bac73cda5de9537c2819a7e
